@@ -84,6 +84,14 @@ def check_file_exist():
     else:
         print('文件不存在')
         # print(file_list)
+
+def main():
+    url = "https://github.com/MINGERTAI/tvboxurl/blob/main/tv/tvbox.json"
+    tvjson=process_json(url)
+    # path=check_file_exist()
+    # print(time.ctime())
+    #notify.send("tvbox路线失效验证", "最后成功的线路条数有："+str(tvjson[1]))
+    check_file_exist()
     
 if __name__ == '__main__':
     filename='tvbox.json'
