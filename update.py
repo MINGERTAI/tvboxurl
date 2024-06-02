@@ -14,7 +14,7 @@ def process_json(url):
     # 检查响应是否成功
     if response.status_code == 200:
     # 解析 JSON 响应
-        jsondata = json.loads(tvboxdcjx.json)
+        jsondata = json.loads(response.text)
         datas=jsondata['urls']
         x=len(datas)
         print('总线路条数：',x)
