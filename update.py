@@ -3,7 +3,7 @@ import json
 import os
 
 # 构建 urls.json 文件的完整路径
-current_dir = os.path.dirname(os.path.realpath(__file__))
+current_dir = os.path.dirname(os.path.abspath(__file__))
 data_file_path = os.path.join(current_dir, 'tv', 'urls.json')
 
 # 用于存储有效链接的列表
@@ -12,7 +12,7 @@ valid_links = []
 try:
     # 读取 JSON 数据
     with open(data_file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
+        data = json.load(file)["urls"]  # 根据新的结构读取 urls
 
     # 遍历 JSON 数据中的每个链接
     for item in data:
@@ -32,11 +32,14 @@ try:
             # 请求出错（如超时或连接错误）也认为链接无效
             print(f"链接 {name} 无法访问，错误：{e}。")
 
+    # 准备保存的新 JSON 结构，包含 "urls"
+    new_data = {"urls": valid_links}
+
     # 保存所有有效链接到新的 JSON 文件
     valid_links_file_path = os.path.join(current_dir, 'tv', 'valid_links.json')
     with open(valid_links_file_path, 'w', encoding='utf-8') as f:
-        json.dump(valid_links, f, indent=4, ensure_ascii=False)
+        json.dump(new_data, f, indent=4, ensure_ascii=False)
 
-    print("所有有效链接已经保存到 tv/valid_links.json 文件。")
+    print(f"所有有效链接已经保存到 {valid_links_file_path} 文件。")
 except Exception as e:
     print(f"读取或处理 JSON 数据时发生错误：{e}")
